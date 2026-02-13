@@ -62,6 +62,68 @@ Use this workflow by default unless the user asks for a different process.
 - Planning document body language must be Korean by default (except file paths, code, formulas, and proper nouns).
 - A planning cycle is considered incomplete if the above file-format rules are not met.
 
+## Naver Planning Style Rule (Propagation)
+Apply this rule to every agent-generated planning document by default.
+- Primary reference:
+  - `docs/ralph/research/naver_planning_style_guide_2026-02-13.md`
+- Source post:
+  - `https://blog.naver.com/d994411/222171000179`
+
+Required writing principles:
+1. Narrow scope first: avoid broad themes, pick one concrete and implementable feature/topic.
+2. Recruiter view first: write for a reviewer who does not know the game/project context.
+3. Evidence over opinion: include rationale from gameplay observation, market trend, or in-project constraints.
+4. Readability first: keep template clean, emphasize key points with concise sentences.
+5. Visual assist mandatory: when text becomes long, add flow/table/image summary before detailed text.
+
+Required section order (minimum):
+1. Cover + document metadata (title/date/author or owner/task id)
+2. Table of contents
+3. Overview: game/context summary + why this proposal is needed
+4. Main design:
+   - what it is,
+   - when/where it is used,
+   - step-by-step flow,
+   - rewards/results/expected effect,
+   - core fun factor
+5. Implementation feasibility:
+   - required data, scene/script touchpoints, collaboration impact
+6. QA/validation plan:
+   - test scenarios, pass criteria, risk notes
+7. Conclusion:
+   - expected impact and next actions
+
+Mandatory check items before marking plan complete:
+- The proposal can be understood by a non-domain reviewer in under 3 minutes.
+- The core fun point is stated explicitly in one sentence.
+- At least one concrete flow or table is included for process-heavy sections.
+- References and assumptions are listed at the end.
+- All image links are local relative paths.
+
+Additional required rules for readable planning docs:
+1. Use concise paragraphs and put one-sentence conclusion first in each section.
+2. Prefer tables/flows over long prose when explaining systems.
+3. If the document is for team recruiting/pitch/business review, use the 12-section extended outline in:
+   - `docs/ralph/research/naver_planning_style_guide_2026-02-13.md`
+4. If BM/pricing is discussed, include:
+   - BM candidate comparison,
+   - risk notes (user experience/regulation),
+   - BEP simulation assumptions and result table.
+5. For combat/skill documents delivered to engineering teams, include:
+   - flowchart,
+   - rule/variable/interface/exception definitions,
+   - technical requirements.
+6. For external-facing planning docs (recruiting/publishing), include:
+   - development milestones,
+   - budget breakdown,
+   - launch/BM plan.
+7. For scenario/world-heavy docs, include:
+   - map overview (layout/legend/links/parameters),
+   - region detail pages,
+   - landmark/background rules,
+   - UI detail pages tied to player flow.
+8. If references come from OCR/scraped text, normalize broken text/tables before using them.
+
 ## ComfyUI Path and Invocation Rule
 - ComfyUI install root is fixed to `D:\comfyUI`.
 - Do not use WebUI/Forge routes for 2D asset generation in this repository.

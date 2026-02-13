@@ -19,8 +19,3 @@
 1. Start from official Steam page for Minion Masters.
 2. Save screenshots and run-screen images under reference/minion-masters/.
 3. Update this README with date, source links, and key takeaways.
-
-
-## Local Subfolder Guide
-- (No child folders) 현재 폴더는 파일 단위로만 구성됩니다.
-

@@ -76,9 +76,11 @@ $taskSlug = Slugify -Text $TaskName
 $docsRoot = "docs/ralph"
 $runRoot = Join-Path $docsRoot "runs"
 $distRoot = Join-Path $docsRoot "distribution"
+$planRoot = Join-Path $docsRoot "plans"
 Ensure-Dir $docsRoot
 Ensure-Dir $runRoot
 Ensure-Dir $distRoot
+Ensure-Dir $planRoot
 
 $preferredReferenceRoot = "reference/minion-masters"
 $referenceRoot = $preferredReferenceRoot
@@ -158,7 +160,29 @@ $referenceReadme = @"
 Set-Content -Path $referenceReadmePath -Value $referenceReadme
 
 Write-Stage "2) Create planning document"
-$planPath = Join-Path $docsRoot ("plan-{0}-{1}.md" -f $today, $taskSlug)
+$planPath = Join-Path $planRoot ("plan-{0}-{1}.md" -f $today, $taskSlug)
+$planImageRoot = Join-Path $planRoot "images/minion-masters"
+Ensure-Dir $planImageRoot
+
+$shotFiles = Get-ChildItem $referenceRoot -Filter "screenshot_*.jpg" -ErrorAction SilentlyContinue | Sort-Object Name | Select-Object -First $ScreenshotCount
+foreach ($shot in $shotFiles) {
+	Copy-Item -Path $shot.FullName -Destination (Join-Path $planImageRoot $shot.Name) -Force
+}
+
+$imageLines = @()
+$imageIndex = 1
+foreach ($shot in $shotFiles) {
+	$relative = "images/minion-masters/$($shot.Name)"
+	$imageLines += "$imageIndex. 레퍼런스 스크린샷"
+	$imageLines += "![reference-$imageIndex]($relative)"
+	$imageLines += ""
+	$imageIndex++
+}
+if ($imageLines.Count -eq 0) {
+	$imageLines += "- (수집된 스크린샷 없음: 다음 사이클에서 재수집 필요)"
+}
+$imageBlock = ($imageLines -join "`n")
+
 $planDoc = @"
 # Ralph Plan - $TaskName
 
@@ -166,23 +190,61 @@ Date: $today
 Reference Topic: $ReferenceTopic
 Graphics Mode: $GraphicsMode
 
-## 1. Reference Summary
-- Source pack refreshed under $referenceRoot.
-- Core benchmark: fast readability, short combat loop, clear ownership cues.
+## 0. 표지/메타
+- 문서 ID: plan-$today-$taskSlug
+- 기준 지침: docs/ralph/research/naver_planning_style_guide_2026-02-13.md
 
-## 2. Feature Planning
-1. Define one concrete gameplay/UI change for this cycle.
-2. Implement in scene/script pair with typed GDScript and stable paths.
-3. Record manual reproduction steps and expected result.
+## 1. 목차
+1. 개요
+2. 본론
+3. 구현 가능성
+4. QA/검증
+5. 참고/가정
 
-## 3. Graphic Production Rule
-- ComfyUI: generate missing card art with tools/generate_card_art.py.
-- KayKit: prefer existing licensed assets under assets/kaykit/.
+## 2. 개요
+- 대상: $ReferenceTopic 기반 카드 배틀 루프 개선
+- 배경: 전투 가독성, 짧은 전투 순환, 즉시 피드백 강화를 우선 과제로 설정
+- 목표: 한 사이클 내 구현 가능한 단일 변경안을 정의하고 검증 가능한 형태로 문서화
 
-## 4. Development / Review / QA
-1. Development: implement the scoped change.
-2. Review: verify logic regressions and scene/script references.
-3. QA: run static QA and headless startup check, then manual smoke test.
+## 3. 본론
+### 3.1 기획안 정의
+- 이번 사이클의 주제 폭은 좁게 유지한다.
+- 변경 범위는 하나의 기능/화면/상태 흐름으로 제한한다.
+
+### 3.2 사용 시점/동작 맥락
+- 전투 시작~중반 구간에서 플레이어가 가장 자주 보는 정보(코스트/핸드/전장 상태)를 우선 개선한다.
+
+### 3.3 단계별 흐름(요약)
+1. 문제 구간 식별
+2. 단일 개선안 정의
+3. 씬/스크립트 적용
+4. QA 체크
+
+### 3.4 레퍼런스 이미지(로컬 링크)
+$imageBlock
+
+### 3.5 핵심 재미 포인트 (한 문장)
+- 짧은 판단-실행-결과 루프를 강화해, 카드 사용 직후 전황 변화가 즉시 체감되게 한다.
+
+## 4. 구현 가능성
+- 예상 영향 경로: scenes/battle, scenes/ui, scripts/card_battle, scripts/ui
+- 데이터 변경 필요 시 CSV 또는 `.tres`로 추적 가능하게 기록
+- 협업 체크: UI/아트 변경이 포함되면 리소스 경로와 버전 규칙을 함께 명시
+
+## 5. QA/검증 계획
+1. 정적 QA: tools/qa_card_battle_static_checks.ps1
+2. 헤드리스: tools/run_godot_safe.ps1 -Mode headless
+3. 수동 검증: 수정된 씬 1회 이상 실행 후 기대 결과 확인
+
+합격 기준:
+- parse/startup 오류 없음
+- 핵심 변경 동작 재현 가능
+- 문서 내 근거/가정/다음 액션 누락 없음
+
+## 6. 참고/가정
+- Steam store: $steamStoreUrl
+- Reference README: $referenceReadmePath
+- 가정: 본 사이클은 구현 가능한 단일 주제 기준으로 진행
 "@
 Set-Content -Path $planPath -Value $planDoc
 

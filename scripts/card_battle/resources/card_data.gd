@@ -1,4 +1,5 @@
-class_name CardData extends Resource
+extends Resource
+class_name CardData
 
 enum CardType { MINION, SPELL }
 enum MinionKeyword { NONE, TAUNT, RUSH }
