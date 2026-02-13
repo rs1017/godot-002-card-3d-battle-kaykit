@@ -1,0 +1,11 @@
+card_id,name,type,cost,atk,hp,keyword,battlecry,spell_effect,notes
+1,Knight,Minion,4,4,5,Taunt,None,None,Frontline tank baseline
+2,Rogue,Minion,3,4,2,Rush,None,None,Rush cannot hit hero on summon turn
+3,Mage,Minion,5,3,4,None,Deal2,None,Midrange pressure with burst
+4,Barbarian,Minion,6,7,4,None,None,None,High attack finisher
+5,Ranger,Minion,2,2,3,None,None,None,Low curve stabilizer
+6,SkeletonWarrior,Minion,3,3,3,None,None,None,Neutral body
+7,SkeletonMage,Minion,4,2,5,None,Draw1,None,Value engine
+8,SkeletonMinion,Minion,1,1,1,None,None,None,Tempo filler
+9,Fireball,Spell,4,0,0,None,None,Deal6,Direct removal/finisher
+10,HealingTouch,Spell,3,0,0,None,None,Heal5,Sustain tool

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/card_battle/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/cards/card_mage.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+card_id = 3
+card_name = "Mage"
+card_type = 0
+mana_cost = 5
+attack = 3
+health = 4
+description = "Battlecry: Deal 2 damage"
+keyword = 0
+spell_damage = 0
+spell_heal = 0
+spell_draw = 0
+battlecry_damage = 2
+battlecry_draw = 0
+attack_animation = "Spellcast_Shoot"
+is_ranged = true
+kaykit_model_path = "res://assets/kaykit/adventurers/addons/kaykit_character_pack_adventures/Characters/gltf/Mage.glb"
+card_art = ExtResource("2")

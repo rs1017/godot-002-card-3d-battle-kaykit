@@ -1,0 +1,8 @@
+anim_id,state,trigger,duration_sec,priority,notes
+1,summon_burst,on_minion_summon,0.45,high,Spawn readability cue
+2,attack_dash,on_minion_attack,0.35,high,Fast contact readability
+3,damage_pop,on_damage_taken,0.25,medium,Damage feedback number
+4,death_fade,on_minion_death,0.55,high,Clear removal feedback
+5,victory_pose,on_battle_win,2.2,high,Reward emotion anchor
+6,defeat_pose,on_battle_lose,2.2,high,Failure clarity
+7,turn_swap_flash,on_turn_change,0.2,medium,Turn ownership cue

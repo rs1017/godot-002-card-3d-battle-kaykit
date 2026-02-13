@@ -1,0 +1,6 @@
+.godot/
+.godot_user/
+.tmp_appdata/
+tmp/
+*.tmp
+tools/__pycache__/

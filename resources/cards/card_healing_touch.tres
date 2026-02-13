@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/card_battle/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/cards/card_healing_touch.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+card_id = 10
+card_name = "Healing Touch"
+card_type = 1
+mana_cost = 3
+attack = 0
+health = 0
+description = "Restore 5 health"
+keyword = 0
+spell_damage = 0
+spell_heal = 5
+spell_draw = 0
+battlecry_damage = 0
+battlecry_draw = 0
+attack_animation = ""
+is_ranged = false
+kaykit_model_path = ""
+card_art = ExtResource("2")

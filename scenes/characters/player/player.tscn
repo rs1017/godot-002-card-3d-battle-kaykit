@@ -1,0 +1,85 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="2_sm"]
+[ext_resource type="Script" path="res://scripts/characters/player/states/idle_state.gd" id="3_idle"]
+[ext_resource type="Script" path="res://scripts/characters/player/states/move_state.gd" id="4_move"]
+[ext_resource type="Script" path="res://scripts/characters/player/states/attack_state.gd" id="5_attack"]
+[ext_resource type="Script" path="res://scripts/characters/player/states/dodge_state.gd" id="6_dodge"]
+[ext_resource type="Script" path="res://scripts/characters/player/states/hit_state.gd" id="7_hit"]
+[ext_resource type="Script" path="res://scripts/characters/player/states/death_state.gd" id="8_death"]
+[ext_resource type="Script" path="res://scripts/components/health_component.gd" id="9_health"]
+[ext_resource type="Script" path="res://scripts/components/hitbox.gd" id="10_hitbox"]
+[ext_resource type="Script" path="res://scripts/components/hurtbox.gd" id="11_hurtbox"]
+[ext_resource type="PackedScene" uid="uid://be3gxh3kr7o1q" path="res://assets/kaykit/adventurers/addons/kaykit_character_pack_adventures/Characters/gltf/Knight.glb" id="12_knight"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hitbox"]
+size = Vector3(0.8, 0.6, 0.8)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hurtbox"]
+radius = 0.35
+height = 1.0
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Model" parent="." instance=ExtResource("12_knight")]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_sm")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_idle")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("4_move")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("5_attack")
+
+[node name="Dodge" type="Node" parent="StateMachine"]
+script = ExtResource("6_dodge")
+
+[node name="Hit" type="Node" parent="StateMachine"]
+script = ExtResource("7_hit")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("8_death")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("9_health")
+max_health = 100
+current_health = 100
+
+[node name="HitBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.8)
+collision_layer = 0
+collision_mask = 16
+monitoring = false
+monitorable = false
+script = ExtResource("10_hitbox")
+damage = 25
+knockback_force = 8.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = SubResource("BoxShape3D_hitbox")
+
+[node name="HurtBox" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("11_hurtbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+shape = SubResource("CapsuleShape3D_hurtbox")

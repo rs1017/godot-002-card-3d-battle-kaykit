@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/card_battle/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/cards/card_rogue.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+card_id = 2
+card_name = "Rogue"
+card_type = 0
+mana_cost = 3
+attack = 4
+health = 2
+description = "Rush"
+keyword = 2
+spell_damage = 0
+spell_heal = 0
+spell_draw = 0
+battlecry_damage = 0
+battlecry_draw = 0
+attack_animation = "1H_Melee_Attack_Stab"
+is_ranged = false
+kaykit_model_path = "res://assets/kaykit/adventurers/addons/kaykit_character_pack_adventures/Characters/gltf/Rogue.glb"
+card_art = ExtResource("2")

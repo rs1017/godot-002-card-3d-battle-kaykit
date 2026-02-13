@@ -1,0 +1,5 @@
+map_id,name,layout_type,lane_count,key_objectives,readability_notes
+1,Arena_Classic,SymmetricBridge,2,BridgeControl+MasterPressure,High contrast ownership colors
+2,Arena_SpaceDock,SymmetricBridge,2,BridgeControl+SpellTiming,Wide center readability
+3,Arena_Ruins,TriZone,3,CenterHold+SideFlank,Need stronger minimap cues
+4,Arena_FrostGate,SymmetricBridge,2,TempoRace,Projectile visibility priority

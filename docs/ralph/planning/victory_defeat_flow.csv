@@ -1,0 +1,6 @@
+flow_id,phase,ui_state,required_event,success_condition,failure_condition
+1,pre_end,battle_active,enemy_hp_check,enemy_hp<=0,none
+2,win_transition,victory_panel,battle_ended_true,panel_visible,missing_panel
+3,lose_transition,defeat_panel,battle_ended_false,panel_visible,missing_panel
+4,restart_flow,reload_scene,restart_button,scene_reloaded,stuck_scene
+5,reward_preview,victory_summary,win_data_loaded,reward_data_visible,reward_null

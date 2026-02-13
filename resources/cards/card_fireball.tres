@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/card_battle/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/ui/cards/card_fireball.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+card_id = 9
+card_name = "Fireball"
+card_type = 1
+mana_cost = 4
+attack = 0
+health = 0
+description = "Deal 6 damage"
+keyword = 0
+spell_damage = 6
+spell_heal = 0
+spell_draw = 0
+battlecry_damage = 0
+battlecry_draw = 0
+attack_animation = ""
+is_ranged = false
+kaykit_model_path = ""
+card_art = ExtResource("2")

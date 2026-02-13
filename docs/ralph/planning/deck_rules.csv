@@ -1,0 +1,11 @@
+rule_id,category,name,value_or_formula,description
+1,deck,max_deck_size,20,Prototype deck size
+2,deck,max_hand_size,10,Hand cap
+3,board,max_board_size,7,Board cap per side
+4,mana,max_mana,10,Turn mana cap
+5,turn,draw_per_turn,1,Default draw each turn
+6,fatigue,damage_n,n,Damage increases by 1 each fatigue draw
+7,keyword,taunt_priority,true,Must attack taunt first
+8,keyword,rush_summon_attack,true,Rush can attack minions on summon turn
+9,keyword,rush_hero_attack,false,Rush cannot attack hero on summon turn
+10,keyword,battlecry_trigger,on_summon,Battlecry resolves on play

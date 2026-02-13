@@ -1,0 +1,8 @@
+formula_id,name,expression,example_input,example_output,notes
+1,basic_minion_trade,def_hp-=atk;atk_hp-=def_atk,4v3 and 3v2,1hp and 0hp,Simultaneous damage
+2,hero_damage_from_minion,hero_hp-=atk,atk=4,hero-4,Direct hit
+3,fireball_damage,target_hp-=6,target_hp=10,target_hp=4,Spell direct damage
+4,healing_touch,hero_hp=min(max_hp,hero_hp+5),hp=22,max=30,hp=27,Clamp to max hp
+5,fatigue_tick,hero_hp-=fatigue_counter,counter=3,hero-3,Counter increases each empty draw
+6,victory_check,if enemy_hp<=0 then win,enemy_hp=0,win,End state check
+7,defeat_check,if player_hp<=0 then lose,player_hp=0,lose,End state check

@@ -1,0 +1,8 @@
+qa_id,category,check_name,method,target,pass_criteria
+1,fun,decision_density,manual,turn_loop,Player has >=2 meaningful choices each turn
+2,fun,feedback_clarity,manual,vfx_sfx,Player can identify source/target instantly
+3,fun,tempo_satisfaction,manual,combat_loop,Summon-to-impact loop feels responsive
+4,qa,keyword_rule_f8,auto,F8_hook,Keyword checks return PASS
+5,qa,ai_rule_f9,auto,F9_hook,AI checks return PASS
+6,qa,headless_startup,auto,run_godot_safe,exit code 0
+7,qa,static_integrity,auto,qa_card_battle_static_checks,QA_STATIC_CHECK PASS

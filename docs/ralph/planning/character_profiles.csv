@@ -1,0 +1,8 @@
+character_id,name,faction,role,core_identity,ui_description,animation_profile
+1,PlayerMaster,Alliance,Commander,TempoControl,Controls mana and board pressure,calm_confident
+2,EnemyMaster,Undead,Commander,AttritionPressure,Trades resources into inevitability,grim_deliberate
+3,Knight,Alliance,Tank,FrontlineShield,Protects allied units with Taunt,heavy_guard
+4,Rogue,Alliance,Assassin,BurstTempo,Rush unit for quick trades,fast_strike
+5,Mage,Alliance,Caster,SpellBurst,Battlecry damage setup,arcane_cast
+6,SkeletonWarrior,Undead,Frontline,SteadyBody,Basic undead frontline,stiff_heavy
+7,SkeletonMage,Undead,Caster,ValueEngine,Battlecry draw utility,necromancy_cast
