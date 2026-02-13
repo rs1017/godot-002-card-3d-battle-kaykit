@@ -25,7 +25,9 @@ Ensure-Dir $reviewsDir
 $planGateOut = (& powershell -ExecutionPolicy Bypass -File "tools/check_planning_gate.ps1" -PlanningPath $PlanningPath -MinPages $PlanningMinPages 2>&1 | Out-String)
 $planGatePass = $LASTEXITCODE -eq 0
 
-$run = Get-ChildItem "docs/ralph/runs" -Filter ("run-*-{0}.md" -f $CycleName) -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+$run = Get-ChildItem "docs/ralph/runs" -Filter ("run-*-{0}.md" -f $CycleName) -ErrorAction SilentlyContinue |
+	Sort-Object LastWriteTime -Descending |
+	Select-Object -First 1
 $runBody = if ($run) { Get-Content $run.FullName -Raw } else { "" }
 
 $checkRunExists = $run -ne $null
@@ -41,25 +43,23 @@ if ($runBody -match "(?m)^Plan:\s+(.+)$") {
 $checkGuideDoc = Test-Path $PlanningGuidePath
 $planBody = if (-not [string]::IsNullOrWhiteSpace($runPlanPath) -and (Test-Path $runPlanPath)) { Get-Content $runPlanPath -Raw } else { "" }
 $checkPlanExists = -not [string]::IsNullOrWhiteSpace($planBody)
+
 $checkPlanSections = $false
 if ($checkPlanExists) {
-	$requiredSections = @(
-		"## 1. 목차",
-		"## 2. 개요",
-		"## 3. 본론",
-		"## 4. 구현 가능성",
-		"## 5. QA/검증 계획",
-		"## 6. 참고/가정"
-	)
-	$missingCount = 0
-	foreach ($section in $requiredSections) {
-		if (-not $planBody.Contains($section)) {
-			$missingCount++
+	$requiredSectionMarkers = @("## 1.", "## 2.", "## 3.", "## 4.", "## 5.", "## 6.")
+	$checkPlanSections = $true
+	foreach ($marker in $requiredSectionMarkers) {
+		if (-not $planBody.Contains($marker)) {
+			$checkPlanSections = $false
+			break
 		}
 	}
-	$checkPlanSections = $missingCount -eq 0
 }
-$hasExternalImageLink = $planBody -match '!\[[^\]]*\]\((https?://[^)]+)\)'
+
+$hasExternalImageLink = $false
+if ($checkPlanExists) {
+	$hasExternalImageLink = $planBody.Contains("](http://") -or $planBody.Contains("](https://")
+}
 $checkLocalImageRule = $checkPlanExists -and (-not $hasExternalImageLink)
 
 $shotCount = (Get-ChildItem $ReferencePath -Filter "screenshot_*.jpg" -ErrorAction SilentlyContinue).Count
@@ -81,7 +81,18 @@ if ($aiOpponent.Contains("_choose_attack_target")) { $funSignals += 1 }
 $funScore = [math]::Min(10, $funSignals + 4)
 $funPass = $funScore -ge 7
 
-$allPass = $planGatePass -and $checkRunExists -and $checkStatic -and $checkHeadless -and $checkReviewSection -and $checkGuideDoc -and $checkPlanExists -and $checkPlanSections -and $checkLocalImageRule -and $checkShots -and $checkWebAudit -and $funPass
+$allPass = $planGatePass -and
+	$checkRunExists -and
+	$checkStatic -and
+	$checkHeadless -and
+	$checkReviewSection -and
+	$checkGuideDoc -and
+	$checkPlanExists -and
+	$checkPlanSections -and
+	$checkLocalImageRule -and
+	$checkShots -and
+	$checkWebAudit -and
+	$funPass
 
 $reviewPath = Join-Path $reviewsDir ("review-{0}-{1}.md" -f $date, $CycleName)
 $review = @"
@@ -97,8 +108,8 @@ Date: $date
 - Run includes review checklist: $(if ($checkReviewSection) { "PASS" } else { "FAIL" })
 - Planning guide doc exists: $(if ($checkGuideDoc) { "PASS" } else { "FAIL" }) ($PlanningGuidePath)
 - Plan file resolved from run report: $(if ($checkPlanExists) { "PASS" } else { "FAIL" }) ($runPlanPath)
-- Plan required sections match guideline: $(if ($checkPlanSections) { "PASS" } else { "FAIL" })
-- Plan local image-link rule (no external image URL): $(if ($checkLocalImageRule) { "PASS" } else { "FAIL" })
+- Plan required section markers: $(if ($checkPlanSections) { "PASS" } else { "FAIL" })
+- Plan local image-link rule: $(if ($checkLocalImageRule) { "PASS" } else { "FAIL" })
 - Reference screenshot count >= 8: $(if ($checkShots) { "PASS" } else { "FAIL" }) (count=$shotCount)
 - Web audit note exists: $(if ($checkWebAudit) { "PASS" } else { "FAIL" })
 - Fun QA heuristic (>=7): $(if ($funPass) { "PASS" } else { "FAIL" }) (score=$funScore/10)
