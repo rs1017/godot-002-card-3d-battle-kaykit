@@ -26,10 +26,11 @@
 - 외부 URL 이미지는 문서에 직접 링크하지 않고 로컬 저장 후 링크
 
 ## ComfyUI Runtime Policy
-- ComfyUI root: `D:\comfyUI`
+- ComfyUI root: `D:\\ComfyUI-Easy-Install-Windows\\ComfyUI-Easy-Install\\ComfyUI`
 - API URL: `http://127.0.0.1:8188`
 - 생성은 API 호출 기반으로 수행
 
 ## Local Subfolder Guide
 - `planning`: 장기/확장 기획 문서와 이미지 묶음
 - `ralph`: 자동 파이프라인 실행 로그 및 검증 산출물
+
